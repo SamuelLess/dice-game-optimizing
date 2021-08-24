@@ -1,16 +1,15 @@
-# Unsere Seminarfacharbeit :|
+# Unsere Seminarfacharbeit 🧊
 
+## Zielstellung
+Das Ziel ist es, verschiedene Optimierungsalgorithmen zu vergleichen und schöne Diagramme zu erstellen. :octocat:
 
-Struktur -> Gesamt: Modul
-
-Name Arbeit: Vergleich von Strategieoptimierungen für ein Würfelspiel
-
-Name Repository: Optimizing Dice Game Strategies
-
+## Programm Struktur
+```
 main.py
-output.py
 
-diceGame/diceGame.py -> einheitliches Environment
+diceGame/diceGame.py -> einheitliches Environment auf dem alle Algorithmen optimieren
+diceGame/diceGameOptimizer -> Handler für alles, je nach keywords des Aufrufs
+diceGame/output.py
 
 diceGame/evolutionary/evolutionarySearch.py
 diceGame/evolutionary/agent.py
@@ -19,4 +18,4 @@ diceGame/evolutionary/strat/...
 diceGame/reinforcement/reinforcementLearning.py
 diceGame/reinforcement/agent.py
 diceGame/reinforcement/strat/...
-
+```
