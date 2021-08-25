@@ -10,7 +10,7 @@ class Agent:
 		self.fitness = 0
 		self.isLegal = True
 
-	def evaluateFitness(self, fitnessAgainst):
+	def evaluateFitness(self, fitnessAgainst, output=False):
 		rewards = []
 		if fitnessAgainst == "all":
 			for i in range(len(self.game.DICE)):
@@ -24,7 +24,9 @@ class Agent:
 				while not self.game.finished():
 					oppdice, reward = self.game.takeAction(self.strategyHandler.nextMove(oppdice, self.strat))
 				rewards.append(reward)
-		self.fitness = sum(rewards)/len(rewards)
+		if output:
+			print(f"{rewards=}")
+		self.fitness = sum(rewards)/(len(rewards))
 		self.isLegal = True if self.fitness >= 0 else False
 
 	def changedAgent(self):
