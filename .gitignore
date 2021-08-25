@@ -3,7 +3,7 @@
 
 html/
 
-.*
+.*/
 !/.gitignore
 
 # Byte-compiled / optimized / DLL files
