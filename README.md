@@ -7,15 +7,15 @@ Das Ziel ist es, verschiedene Optimierungsalgorithmen zu vergleichen und schöne
 ```
 main.py
 
-diceGame/diceGame.py -> einheitliches Environment auf dem alle Algorithmen optimieren
-diceGame/diceGameOptimizer -> Handler für alles, je nach keywords des Aufrufs
-diceGame/output.py
+diceGameOptimizing/diceGame.py -> einheitliches Environment auf dem alle Algorithmen optimieren
+diceGameOptimizing/diceGameOptimizer -> Handler für alles, je nach keywords des Aufrufs
+diceGameOptimizing/output.py
 
-diceGame/evolutionary/evolutionarySearch.py
-diceGame/evolutionary/agent.py
-diceGame/evolutionary/strat/...
+diceGameOptimizing/evolutionary/evolutionarySearch.py
+diceGameOptimizing/evolutionary/agent.py
+diceGameOptimizing/evolutionary/strat/...
 
-diceGame/reinforcement/reinforcementLearning.py
-diceGame/reinforcement/agent.py
-diceGame/reinforcement/strat/...
+diceGameOptimizing/reinforcement/reinforcementLearning.py
+diceGameOptimizing/reinforcement/agent.py
+diceGameOptimizing/reinforcement/strat/...
 ```
