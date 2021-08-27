@@ -1,12 +1,16 @@
 import matplotlib.pyplot as plt
 
-def generatePlot(testRuns: (str, list)):
-	plt.xlabel("Generationen")
+def generatePlot(testRuns: (str, [(int, float)])):
+	#print(testRuns)
+	plt.xlabel("Ausgewertete Spiele")
 	plt.ylabel("Fitness")
-	plt.title("Vergleich von Strategierepräsentationen mit evolutionärer Suche")
+	#plt.gca().set_ylim([0.5,0.65])
+
+	plt.title("Vergleich von Strategieoptimierungsalgorithmen")
 	#TODO: wenn mehrere mit **gleichem Namen**, dann als Wiederholungen sammeln und Varianz/Abweichung einzeichenen
 	for name, rewards in testRuns:
-		plt.plot(rewards[1:-1], label=name)
-		print(name+":", str(rewards[-1]))
+		x, y = zip(*rewards[1::])
+		plt.plot(x, y, label=name, linewidth=1)
+		print(f"{name}: {str(rewards[-1])} rewardPoints: {len(rewards)}")
 	plt.legend()
 	plt.show()

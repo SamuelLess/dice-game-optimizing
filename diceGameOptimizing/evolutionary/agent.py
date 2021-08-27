@@ -1,4 +1,7 @@
 class Agent:
+	def __str__(self):
+		return str("agent mit " + str(self.fitness) + " ")
+
 	def __init__(self, game, strategyHandler, strat, changeRate):
 		self.strategyHandler = strategyHandler
 		self.game = game
@@ -10,11 +13,11 @@ class Agent:
 		self.fitness = 0
 		self.isLegal = True
 
-	def evaluateFitness(self, fitnessAgainst, output=False):
+	def evaluateFitness(self, fitnessAgainst, invisibleGame = False, output=False):
 		rewards = []
 		if fitnessAgainst == "all":
 			for i in range(len(self.game.DICE)):
-				oppdice = self.game.start(playInOrder=True)
+				oppdice = self.game.start(playInOrder=True, invisibleGame=invisibleGame)
 				while not self.game.finished():
 					oppdice, reward = self.game.takeAction(self.strategyHandler.nextMove(oppdice, self.strat))
 				rewards.append(reward)
