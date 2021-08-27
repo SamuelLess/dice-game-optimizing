@@ -1,6 +1,6 @@
 import numpy as np
 #import strategyRep.stratList as stratList
-from diceGame.evolutionary.strategy.strat import StrategyAbstact
+from diceGameOptimizing.evolutionary.strategy.strat import StrategyAbstact
 
 import matplotlib.pyplot as plt
 

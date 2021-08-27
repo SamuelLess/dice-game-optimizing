@@ -1,15 +1,15 @@
-from diceGame.evolutionary.agent import Agent
-from diceGame.evolutionary.strategy.stratList import StratList
-from diceGame.evolutionary.strategy.stratVec import StratVec
-from diceGame.evolutionary.strategy.stratVecComplete import StratVecComplete
-from diceGame.evolutionary.strategy.stratVecDoubleLayer import StratVecDoubleLayer
+from diceGameOptimizing.evolutionary.agent import Agent
+from diceGameOptimizing.evolutionary.strategy.stratList import StratList
+from diceGameOptimizing.evolutionary.strategy.stratVec import StratVec
+from diceGameOptimizing.evolutionary.strategy.stratVecComplete import StratVecComplete
+from diceGameOptimizing.evolutionary.strategy.stratVecDoubleLayer import StratVecDoubleLayer
 
 from tqdm import tqdm
 
 class EvolutionarySearch:
     def __init__(self, game, strategyRep=0, populationSize=100, chooseBest=0.2, 
             changeRate=1, generations=50, fitnessAgainst="all", output=False):
-        self.game = game 
+        self.game = game
         if strategyRep == 0:
             self.strategyHandler = StratList(game.pips, game.sides)
         elif strategyRep == 1:
@@ -45,8 +45,9 @@ class EvolutionarySearch:
         self.population.extend(newPopulation)
 
     def train(self):
-        rewards = []
+        rewardPoints = []
         for i in tqdm(range(self.generations)):
-            rewards.append(self.population[0].fitness)
+            self.population[0].evaluateFitness("all", invisibleGame=True)
+            rewardPoints.append((self.game.gamesPlayed, self.population[0].fitness))
             self.nextGeneration()
-        return rewards
+        return rewardPoints

@@ -2,7 +2,7 @@ from itertools import repeat
 import numpy as np
 import statistics as stat
 import random
-from diceGame.evolutionary.strategy.strat import StrategyAbstact
+from diceGameOptimizing.evolutionary.strategy.strat import StrategyAbstact
 
 #alle möglichen Spielstände mit gegebenen pips und sides
 

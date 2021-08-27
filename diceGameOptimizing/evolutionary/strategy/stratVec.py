@@ -2,7 +2,7 @@ import numpy as np
 from tqdm import tqdm
 #import strategyRep.stratList as stratList
 import matplotlib.pyplot as plt
-from diceGame.evolutionary.strategy.strat import StrategyAbstact
+from diceGameOptimizing.evolutionary.strategy.strat import StrategyAbstact
 
 class StratVec(StrategyAbstact): 
 	def __init__(self, pips, sides):
