@@ -20,15 +20,18 @@ class Game:
         self.agentDice = []
         self.atTurn = 0
         self.atDice = 0
+        self.gamesPlayed = 0
         self.rewardDraw = rewardDraw
 
-    def start(self, playInOrder=False):
+    def start(self, playInOrder=False, invisibleGame=False):
         """
         Startet ein zufälliges Spiel, außer wenn playInOrder True ist.
         In diesem Fall werden alle möglichen Würfel (inkl. Permutationen) nacheinander gespielt.
 
         Return: Liste mit erstem Spielzug.
         """
+        if not invisibleGame:
+            self.gamesPlayed += 1
         self.agentDice = []
         self.gameDice = self.DICE[rand.randint(0,len(self.DICE)-1)]
         if self.atDice == len(self.DICE):
@@ -37,7 +40,6 @@ class Game:
             self.gameDice = self.DICE[self.atDice]
             #print("playInOrder at", str(self.atDice), "with", str(self.gameDice))
             self.atDice += 1
-
         self.atTurn = 0
         return self.gameDice[0:self.atTurn+1]
 
@@ -71,13 +73,13 @@ class Game:
         if self.atTurn == self.sides-1:
             self.agentDice.append(self.pips-sum(self.agentDice))
             self.atTurn+=1
-            reward = self.reward()
+            reward = self.reward(output = False)
 
         if self.illegal():
             reward = -10
         return self.gameDice[0:self.atTurn+1], reward
     
-    def reward(self):
+    def reward(self, output = False):
         """
         Berechnet unter Beachtung des Wertes "rewardDraw" die Auszahlung 
         eines abgeschlossenen legalen Spiels für den Spieler.
@@ -91,6 +93,8 @@ class Game:
                     wp1+=1
                 elif(p1==p2):
                     wp1+=self.rewardDraw
+        if output:
+            print(self.gameDice, "vs", self.agentDice, (wp1/(self.sides**2)))
         return wp1/(self.sides*self.sides)
 
     def generateDice(self, usedSides, dice):
