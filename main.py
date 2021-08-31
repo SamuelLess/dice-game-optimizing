@@ -1,5 +1,5 @@
-from diceGame.diceGameOptimizer import optimizeDiceGame
-from diceGame.output import generatePlot
+from diceGameOptimizing.diceGameOptimizer import optimizeDiceGame
+from diceGameOptimizing.output import generatePlot
 
 import random
 import numpy
@@ -14,21 +14,26 @@ PIPS = 6
 SIDES = 3
 
 def main():
-    evo_reps = []
-    evo_kwargs = {"strategyRep": 0, "populationSize" : 200, "generations": 5, "fitnessAgainst": 0.8}
+    print(f"({PIPS=}, {SIDES=})")
+    reps = []
+    evo_kwargs = {"strategyRep": 0, "populationSize" : 100, "generations": 25, "fitnessAgainst": "all"}
     for i in range(0,4):
         random.seed(i)
         numpy.random.seed(i)
         evo_kwargs["strategyRep"] = i
-        #evo_reps.append(optimizeDiceGame(PIPS, SIDES, "EVO", evo_kwargs=evo_kwargs))
-    #print(rewards)
-    #generatePlot(evo_reps)
+        #reps.append(optimizeDiceGame(PIPS, SIDES, "EVO", evo_kwargs=evo_kwargs))
 
-    rl_kwargs = {"strategyRep": 0, "alpha": 0.9, "gamma": 0.5, "epsilon": 0.3, "epsilonDecay": 0.999, "timeSteps": 100}
+    
+    rl_kwargs = {"defaultQValue": float(0.0) ,"alpha": 0.5, "gamma": 0.7, 
+    "epsilon": 0.8, "epsilonDecay": 0.9995, "timeSteps": 1000, "rewardPointDensity": 0.4}
+    end_epsilon = 0.01
+    rl_kwargs["epsilonDecay"] = (end_epsilon/rl_kwargs["epsilon"])**(1.0/rl_kwargs["timeSteps"])
+    
+    random.seed(42)
+    numpy.random.seed(42)
+    reps.append(optimizeDiceGame(PIPS, SIDES, "RL", rl_kwargs=rl_kwargs, output = False))
 
-    rl_rep = optimizeDiceGame(PIPS, SIDES, "RL", rl_kwargs=rl_kwargs)
-
-
+    generatePlot(reps)
 
 if __name__ == "__main__":
     main()
