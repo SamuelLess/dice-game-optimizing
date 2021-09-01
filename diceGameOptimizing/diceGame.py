@@ -41,6 +41,7 @@ class Game:
             #print("playInOrder at", str(self.atDice), "with", str(self.gameDice))
             self.atDice += 1
         self.atTurn = 0
+        #print(self.gameDice, playInOrder)
         return self.gameDice[0:self.atTurn+1]
 
     def finished(self):
@@ -58,7 +59,7 @@ class Game:
         """
         return sum(self.agentDice) > self.pips or (self.agentDice[-1] if len(self.agentDice) > 0 else 0) < 0
 
-    def takeAction(self, action: int):
+    def takeAction(self, action: int, output = False):
         """
         Spielt ein bereits gestartetes Spiel weiter.
         Gibt den bisher sichtbaren Würfel des Gegeners 
@@ -73,7 +74,7 @@ class Game:
         if self.atTurn == self.sides-1:
             self.agentDice.append(self.pips-sum(self.agentDice))
             self.atTurn+=1
-            reward = self.reward(output = False)
+            reward = self.reward(output = output)
 
         if self.illegal():
             reward = -10
