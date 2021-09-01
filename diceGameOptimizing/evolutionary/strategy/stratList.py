@@ -4,8 +4,6 @@ import statistics as stat
 import random
 from diceGameOptimizing.evolutionary.strategy.strat import StrategyAbstact
 
-#alle möglichen Spielstände mit gegebenen pips und sides
-
 '''
 Diese Klasse ist für die Strategiedarstellgung über Listen zuständig.
 '''
@@ -29,10 +27,11 @@ class StratList(StrategyAbstact):
 
         Return: Zahl
         """
-        for i in range (len(self.STATES)):
+        for i in range(len(self.STATES)):
             if(self.STATES[i]==state):
                return i
-        return "SOMETHING VERY WRONG"
+        #Kommt vor, wird aber nicht für Zugriff auf self.STATES verwendet.
+        return "Should not be used."
 
     def createStates(self, usedSides, state):
         """
@@ -144,7 +143,7 @@ class StratList(StrategyAbstact):
         Return: ob Legale Änderung
         """
         sum = 0
-        for i in range(1,self.sides):
+        for i in range(1,self.sides-1):
             sum += strategy[stateNum]
             stateNum = self.numOfState(self.STATES[stateNum][0:-i])
         return (sum <= self.pips)
