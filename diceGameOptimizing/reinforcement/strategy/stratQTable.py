@@ -8,6 +8,10 @@ def argNmax(a, N, axis=None):
 
 class StratQTable:
 	def __init__(self, game, defaultQValue, alpha, gamma, epsilon, epsilonDecay):
+		"""
+		Implementiert eine Q-Table auf basis eines `dict`.
+
+		"""
 		self.game = game
 		self.alpha = alpha
 		self.gamma = gamma
@@ -21,12 +25,16 @@ class StratQTable:
 		#print(self.qtable)
 
 	def reinforce(self, state, nextState, action, reward):
+
 		if state not in self.qtable:
 			self.qtable[state] = np.full(self.game.pips+1, self.defaultQValue)
-		if nextState not in self.qtable:
+		if nextState not in self.qtable and len(nextState[0]) < self.game.sides:
 			self.qtable[nextState] = np.full(self.game.pips+1, self.defaultQValue)
-
-		q_max = max(self.qtable[nextState]) if len(nextState[0]) < self.game.sides else 0
+		
+		if len(nextState[0]) == self.game.sides:
+			q_max = 0
+		else:
+			q_max = max(self.qtable[nextState])
 		"""
 		if q_max == 0:
 			print("qmax0", nextState)
