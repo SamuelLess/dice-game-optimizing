@@ -4,8 +4,11 @@ from tqdm import tqdm
 import math
 
 class ReinforcementLearning:
-	def __init__(self, game, defaultQValue=0.5, strategyRep=0, alpha=0.9, gamma=0.5, 
-		epsilon=0.3, epsilonDecay=0.999, timeSteps=100, rewardPointDensity=0.001 , output=False):
+	def __init__(self, game, defaultQValue=0.5, strategyRep=0, 
+		alpha=0.9, gamma=0.5, epsilon=0.3, endEpsilon=None, epsilonDecay=0.999, 
+		timeSteps=100, rewardPointDensity=0.001, output=False):
+		if endEpsilon is not None:
+			epsilonDecay = (endEpsilon/epsilon)**(1.0/timeSteps)
 		if strategyRep == 0:
 			strategy = StratQTable(game, defaultQValue, alpha, gamma, epsilon, epsilonDecay)
 		else:
