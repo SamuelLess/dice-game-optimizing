@@ -21,7 +21,8 @@ def optimizeDiceGame(pips, sides, optimizerType, evo_kwargs=None, rl_kwargs=None
     if optimizerType == "RL":
         rl = ReinforcementLearning(Game(pips, sides), **rl_kwargs, output=output)
         rewardPoints = rl.train()
-        name = ("RL_" + "dqv" + str(rl_kwargs["defaultQValue"]) + "α" + str(rl_kwargs["alpha"]) +
-            "_γ" + str(rl_kwargs["gamma"]) + "_ε" + str(rl_kwargs["epsilon"]))
+        name = "RL"
+        #name = ("RL_" + "dqv" + str(rl_kwargs["defaultQValue"]) + "α" + str(rl_kwargs["alpha"]) +
+        #    "_γ" + str(rl_kwargs["gamma"]) + "_ε" + str(rl_kwargs["epsilon"]))
 
     return (name, rewardPoints)
