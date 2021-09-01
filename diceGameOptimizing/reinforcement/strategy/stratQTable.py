@@ -7,13 +7,14 @@ def argNmax(a, N, axis=None):
     return np.take(np.argsort(a, axis=axis), -N)
 
 class StratQTable:
-	def __init__(self, game, defaultQValue, alpha, gamma, epsilon, epsilonDecay):
+	def __init__(self, game, defaultQValue, alpha, alphaDecay, gamma, epsilon, epsilonDecay):
 		"""
 		Implementiert eine Q-Table auf basis eines `dict`.
 
 		"""
 		self.game = game
 		self.alpha = alpha
+		self.alphaDecay = alphaDecay
 		self.gamma = gamma
 		self.epsilon = epsilon
 		self.epsilonDecay = epsilonDecay
@@ -35,13 +36,7 @@ class StratQTable:
 			q_max = 0
 		else:
 			q_max = max(self.qtable[nextState])
-		"""
-		if q_max == 0:
-			print("qmax0", nextState)
-			print(reward)
-			print("before", self.qtable[state][action])
-			print("add", (self.alpha * (reward + (self.gamma * q_max) - self.qtable[state][action])))
-		"""
+		
 		self.qtable[state][action] = self.qtable[state][action] + (self.alpha * (reward + (self.gamma * q_max) 
 			- self.qtable[state][action]))
 	
@@ -49,10 +44,6 @@ class StratQTable:
 		if state not in self.qtable:
 			self.qtable[state] = np.full(self.game.pips+1, self.defaultQValue)
 		return self.nthBestMove(state, 1)
-		"""
-		return (np.argmax(self.qtable[state]) if rand.random() > self.epsilon
-		else self.nthBestMove(state, 2))
-		"""
 
 	def nthBestMove(self, state, nth):
 		self.movesGiven[nth] += 1
@@ -66,9 +57,18 @@ class StratQTable:
 			self.qtable[state] = np.full(self.game.pips+1, self.defaultQValue)
 		return np.argmax(self.qtable[state])
 
+	def printqtable(self):
+		out = "PRINTING QTABLE\n"
+		for key in self.qtable:
+			out += "state: " + str(key) + "\n"
+			for i in range(self.game.pips+1):
+				out += f"rew{i}: {self.qtable[key][i]:.3f} "
+			out += "\n"
+		return out
+
 	def generateQTable(self, defaultQValue):
 		"""
-		TODO: unreachable state exist; game is finished with only one illegal move 
+		unused
 		"""
 		agentDice = [[]]
 		for _ in range(self.game.sides-1):

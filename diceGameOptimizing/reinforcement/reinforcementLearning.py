@@ -5,7 +5,7 @@ import math
 
 class ReinforcementLearning:
 	def __init__(self, game, defaultQValue=0.5, strategyRep=0, 
-		alpha=0.9, gamma=0.5, epsilon=0.3, endEpsilon=None, epsilonDecay=0.999, 
+		alpha=0.9, endAlpha=None, gamma=0.5, epsilon=0.3, endEpsilon=None, epsilonDecay=0.999, 
 		timeSteps=100, rewardPointDensity=0.001, output=False):
 		"""
 		Implementiert das Reinforcement Learning in Form von Q-Learning (ε-greedy).
@@ -45,8 +45,12 @@ class ReinforcementLearning:
 		"""
 		if endEpsilon is not None:
 			epsilonDecay = (endEpsilon/epsilon)**(1.0/timeSteps)
+		if endAlpha is not None:
+			alphaDecay = (endAlpha/alpha)**(1.0/timeSteps)
+		else:
+			alphaDecay = 1
 		if strategyRep == 0:
-			strategy = StratQTable(game, defaultQValue, alpha, gamma, epsilon, epsilonDecay)
+			strategy = StratQTable(game, defaultQValue, alpha, alphaDecay, gamma, epsilon, epsilonDecay)
 		else:
 			print("ERROR: Keine valide Startegierepräsentation!") 
 		self.game = game
@@ -81,7 +85,10 @@ class ReinforcementLearning:
 		for i in tqdm(range(self.timeSteps)):
 			self.nextGeneration()
 			if i % math.ceil((self.timeSteps)/(self.rewardPointDensity*self.timeSteps)) == 0:
+				#print(self.agent.strategy.printqtable())
+				#print(self.agent.strategy.epsilon)
 				rewardPoints.append((self.game.gamesPlayed, self.agent.evaluateFitness()))
+		
 		if self.output:
 			for key in self.agent.strategy.qtable.keys():
 				if len(key[0]) > 2:
@@ -89,5 +96,5 @@ class ReinforcementLearning:
 				print("state:", key,"\n", self.agent.strategy.qtable[key])
 			print("epsilon:",self.agent.strategy.epsilon)
 			print("states:", len(self.agent.strategy.qtable.keys()))
-		print("movesGiven", self.agent.strategy.movesGiven)
+			print("movesGiven", self.agent.strategy.movesGiven)
 		return rewardPoints

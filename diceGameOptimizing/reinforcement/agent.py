@@ -12,6 +12,7 @@ class Agent:
 
 	def generationComplete(self):
 		self.strategy.epsilon *= self.strategy.epsilonDecay
+		self.strategy.alpha *= self.strategy.alphaDecay
 
 	def evaluateFitness(self):
 		rewards = []
@@ -20,7 +21,7 @@ class Agent:
 			agentDice = []
 			while not self.game.finished():
 				action = self.strategy.bestMove((tuple(oppDice), tuple(agentDice)))
-				oppDice, reward = self.game.takeAction(action)
+				oppDice, reward = self.game.takeAction(action, output = False)
 				agentDice.append(action)
 			rewards.append(reward)
 		return sum(rewards)/len(rewards)

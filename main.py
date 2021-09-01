@@ -13,18 +13,18 @@ RL_DEFAULT = {"strategyRep": 0, "defaultQValue": 0.5, "alpha": 0.9, "gamma": 0.5
 PIPS = 6
 SIDES = 3
 
-runPerRepEvo = 2
+runPerRepEvo = 0
 
-runsRl = 10
+runsRl = 25
     
 evo_kwargs = {"strategyRep": 0, "populationSize" : 50, "generations": 50, 
     "fitnessAgainst": "all"}
 
-rl_kwargs = {"defaultQValue": float(0.0) ,"alpha": 0.5, "gamma": 0.7, 
+rl_kwargs = {"defaultQValue": 0.1 ,"alpha": 0.5, "endAlpha":0.001, "gamma": 1, 
     "epsilon": 0.8, "endEpsilon": 0.01, "epsilonDecay": 0.9995, 
-    "timeSteps": 70000, "rewardPointDensity": 0.0005}
+    "timeSteps": 70000, "rewardPointDensity": 0.001}
 
-playEvoReps = [0]
+playEvoReps = [0, 3]
 
 def main():
     print(f"({PIPS=}, {SIDES=})")
