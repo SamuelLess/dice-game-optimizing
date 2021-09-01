@@ -7,6 +7,42 @@ class ReinforcementLearning:
 	def __init__(self, game, defaultQValue=0.5, strategyRep=0, 
 		alpha=0.9, gamma=0.5, epsilon=0.3, endEpsilon=None, epsilonDecay=0.999, 
 		timeSteps=100, rewardPointDensity=0.001, output=False):
+		"""
+		Implementiert das Reinforcement Learning in Form von Q-Learning (ε-greedy).
+		Lässt sich durch die `train()` Methode ausführen.
+		
+		.. todo::
+			Besseren Namen für `timeSteps` ausdenken!
+
+		Parameters
+		---------
+		game : Game
+			Environment, das optimiert wird.
+		defaultQValue : float
+			Standardwert im Q-Table
+		strategyRep : int
+			Art der Darstellung des Q-Table
+		alpha : float
+			konstanter Wert α für Q-Learning
+		gamma : float
+			konstanter Wert γ für Q-Learning
+		epsilon : float
+			Startwert des ε 
+		endEpsilon : float
+			Endwert des ε
+		epsilonDecay : float
+			Faktor, mit dem ε nach jedem Spiel verringert wird
+		timeSteps : int
+			Anzahl der zu spielenden Spiele
+		rewardPointDensity : float
+			gibt die Dichte der `rewardPoint`s an
+		.. warning::
+			Es muss 0 <= `strategyRep` <= 0 gelten.
+		.. note::
+			Bei Verwendung von `endEpsilon` wird `epsilonDecay` ignoriert!
+		.. note::
+			Bei zu großen Werten von `defaultQValue` wird stürzt der Algorithmus in eine Depression.
+		"""
 		if endEpsilon is not None:
 			epsilonDecay = (endEpsilon/epsilon)**(1.0/timeSteps)
 		if strategyRep == 0:
@@ -20,6 +56,8 @@ class ReinforcementLearning:
 		self.output = output
 
 	def nextGeneration(self):
+		"""Spielt ein Spiel und führt dabei das Q-Learning aus.
+		"""
 		oppDice = self.game.start()
 		agentDice = []
 		while not self.game.finished():
@@ -32,6 +70,13 @@ class ReinforcementLearning:
 		self.agent.generationComplete()
 
 	def train(self):
+		"""Führt Trainingszyklus über `timeSteps` viele Spiele aus.
+
+		Returns
+		--------
+		rewardPoints : [(int, float)]
+			Punkte (insgesamt gespielte Spiele, erreichte Auszahlung)
+		"""
 		rewardPoints = []
 		for i in tqdm(range(self.timeSteps)):
 			self.nextGeneration()
