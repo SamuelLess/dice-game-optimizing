@@ -29,15 +29,24 @@ def generatePlot(testRuns: (str, [(int, float)])):
 def evalSameNameTestRuns(testRunRewardPoints: [(str, float)]):
 	rewardPoints = {"mean": None, "min": None, "max": None}
 	rewardPoints["mean"] = meanlists(testRunRewardPoints)
-	rewardPoints["min"] = minlists(testRunRewardPoints)
-	rewardPoints["max"] = maxlists(testRunRewardPoints)
+	rewardPoints["min"] = varlists(testRunRewardPoints, False)
+	rewardPoints["max"] = varlists(testRunRewardPoints, True)
 	return rewardPoints
+
+def varlists(lists, add):
+	var = []
+	for row in zip(*lists):
+		rowVals = [item[1] for item in row]
+		mean = sum(rowVals)/len(rowVals)
+		avDelta = sum([abs(mean-rew) for rew in rowVals])/len(rowVals)
+		var.append(mean + (avDelta if add else (-avDelta)))
+	return var
 
 def minlists(lists):
 	mins = []
 	for row in zip(*lists):
 		rowVals = [item[1] for item in row]
-		mins.append( min(rowVals))
+		mins.append(min(rowVals))
 	return mins
 
 def maxlists(lists):
