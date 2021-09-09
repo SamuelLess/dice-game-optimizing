@@ -3,7 +3,7 @@
 ## Zielstellung
 Das Ziel ist es, verschiedene Optimierungsalgorithmen zu vergleichen und schöne Diagramme zu erstellen. :octocat:
 
-## Programm Struktur
+## Programm-Struktur
 ```
 main.py
 
