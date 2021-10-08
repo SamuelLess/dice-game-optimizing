@@ -11,9 +11,6 @@ class ReinforcementLearning:
 		Implementiert das Reinforcement Learning in Form von Q-Learning (ε-greedy).
 		Lässt sich durch die `train()` Methode ausführen.
 		
-		.. todo::
-			Besseren Namen für `timeSteps` ausdenken!
-
 		Parameters
 		---------
 		game : Game

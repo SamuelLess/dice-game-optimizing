@@ -7,29 +7,26 @@ import matplotlib.pyplot as plt
 HIDDEN_LAYER_SIZE = 4
 ActivationFunc = 0
 
-
-
-class StratVecDoubleLayer(StrategyAbstact): 
+class StratVecDoubleLayer(StrategyAbstact):
+	"""
+	Implementiert die Strategiedarstellung über einfache Vektoren.
+	"""
 	def __init__(self, pips, sides):
+		"""
+		Initialisiert neuen Strategie Handler für NN-Strategien.
+		"""
 		self.pips = pips
 		self.sides = sides 
 
 	def randomStrategy(self):
 		"""
-		Erstellt die Funktion 
-
-		Zuständig: Paul
-
-		Argumente: self
-
-		Return: eine Liste mit den weights der Funktion
-		"""
-		"""
-		Inputlayer: (s-1)(p+1) Neuronen.
-		weights dazwischen: HIDDEN_LAYER_SIZE x (s-1)(p+1)
-		Hiddenlayers: HIDDEN_LAYER_SIZE
-		weights dazwischen (p+1) x (HIDDEN_LAYER_SIZE)
-		Outputlayer: (p+1)
+		Erstellt eine zufällige Strategie.
+		.. note:: 
+			Inputlayer: (s-1)(p+1) Neuronen.
+			Gewichte dazwischen: HIDDEN_LAYER_SIZE x (s-1)(p+1)
+			Hiddenlayer: HIDDEN_LAYER_SIZE
+			Gewichte dazwischen (p+1) x (HIDDEN_LAYER_SIZE)
+			Outputlayer: (p+1) Neuronen
 		"""
 		ret = [] 
 		weightsIN_HI = np.random.normal(0, 0.75, (HIDDEN_LAYER_SIZE, (self.sides-1)*(self.pips+1)))
@@ -44,9 +41,15 @@ class StratVecDoubleLayer(StrategyAbstact):
 
 	@staticmethod
 	def activation(x):
+		"""
+		Hilfsfunktion. Aktivierungsfunktion Sigmoid.
+		"""
 		return 1/(1+np.exp(-x))
 
 	def nextMove(self, opponentsMoves, strategy):
+        """
+        Gibt den nächsten Zug zurück
+        """
 		opp_moves_mat= []
 		for i in range(self.sides-1):
 			if(len(opponentsMoves)>i):
@@ -68,6 +71,9 @@ class StratVecDoubleLayer(StrategyAbstact):
 
 
 	def changedStrategy(self, strategy, change):
+		"""
+		Verändert eine gegebene Strategie und gibt eine neue zurück.
+		"""
 		ret = []
 		ret.append(strategy[0].copy())
 		ret.append(strategy[1].copy())
@@ -96,6 +102,9 @@ class StratVecDoubleLayer(StrategyAbstact):
 
 
 	def convertToStratList(self, toConvert):
+		"""
+		Hilfsfunktion. Umwandlung zu einer Listen-Strategie.
+		"""
 		tempstrat = stratList.StratList(self.pips, self.sides)
 		ret_strat=[]
 		for state in tempstrat.STATES:
@@ -104,8 +113,6 @@ class StratVecDoubleLayer(StrategyAbstact):
 """
 strathandler = StratVecDoubleLayer(6,3)
 randstrat = strathandler.randomStrategy()
-
-
 
 print(strathandler.nextMove([0,1], randstrat))
 

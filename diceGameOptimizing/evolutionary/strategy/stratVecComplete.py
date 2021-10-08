@@ -2,20 +2,18 @@ import numpy as np
 #import strategyRep.stratList as stratList
 from diceGameOptimizing.evolutionary.strategy.strat import StrategyAbstact
 
-class StratVecComplete(StrategyAbstact): 
+class StratVecComplete(StrategyAbstact):
+	"""
+    Implementiert die Strategiedarstellung über größere Vektoren.
+    """
 	def __init__(self, pips, sides):
+		"""Initialisiert neuen Strategie Handler für eine größere Vektor-Strategien."""
 		self.pips = pips
 		self.sides = sides
 
 	def randomStrategy(self):
 		"""
-		Erstellt die Funktion 
-
-		Zuständig: Paul
-
-		Argumente: self
-
-		Return: eine Liste mit den weights der Funktion
+		Erstellt eine zufällige Strategie.
 		"""
 		ret = [] 
 		weights = np.random.normal(0, 0.75, (self.pips+1,(self.pips+1)*(self.sides-1)))
@@ -25,16 +23,9 @@ class StratVecComplete(StrategyAbstact):
 		return ret
 
 	def nextMove(self, opponentsMoves, strategy):
-		'''
-		Gibt eine Zahl zurück, wie viele Augen verteilt werden sollen
-
-		Zuständig: Paul
-
-		Arumente: self, ein Array der vom Gegner bereits gesetzten Züge, und die strategy
-
-		Return: i
-
-		'''
+		"""
+		Gibt den nächsten Zug zurück.
+		"""
 		opp_moves_mat=[]
 		for i in range(self.sides-1):
 			if(len(opponentsMoves)>i):
@@ -46,24 +37,16 @@ class StratVecComplete(StrategyAbstact):
 			else:
 				for j in range(self.pips+1):
 					opp_moves_mat.append(1/self.pips)
-		#opp_moves_mat = np.transpose(opp_moves_mats)
-		#mult = (opp_moves_mats * strategy[0])
-		
-		#print("OM",opponentsMoves)
-		#print("OMmat", opp_moves_mat)
-		"""
-		print("mult",mult)
-		print("str[1]",strategy[1])
-		"""
 		v = []
 		for i in range(self.pips+1):
 			v.append(np.sum(opp_moves_mat*strategy[0][i]))
 		v+strategy[1]
-
-		#print("WTP",v)
 		return v.index(max(v))
 
 	def changedStrategy(self, strategy, changeRate):
+		"""
+		Gibt eine veränderte Strategie zurück.
+		"""
 		ret = []
 		ret.append(strategy[0].copy())
 		ret.append(strategy[1].copy())
@@ -82,6 +65,9 @@ class StratVecComplete(StrategyAbstact):
 
 
 	def convertToStratList(self, toConvert):
+		"""
+		Hilfsfunktion. Umwandlung zu einer Listen-Strategie.
+		"""
 		tempstrat = stratList.StratList(self.pips, self.sides)
 		ret_strat=[]
 		for state in tempstrat.STATES:

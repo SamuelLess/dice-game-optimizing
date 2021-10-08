@@ -4,12 +4,22 @@ from diceGameOptimizing.reinforcement.reinforcementLearning import Reinforcement
 
 def optimizeDiceGame(pips, sides, optimizerType, newname=None, evo_kwargs=None, rl_kwargs=None, output=False):
     """
-    pips, sides: p, s
+    Hauptfunktion, die je nach Parametern eine Strategie optimiert.
     
-    optimizeType: str mit "RL" oder "EVO"
-    
-    
-    
+    Parameters
+    ---------
+    pips : int
+        Augenanzahl für das Spiel.
+    sides : int
+        Seitenanzahl für das Spiel.
+    optimizerType : str
+        Legt Algorithmustyp fest; Entweder "EVO" oder "RL".
+    newname : str
+        Name für das Diagramm.
+    evo_kwargs : dict
+        Parameter für EVO.
+    rl_kwargs : dict
+        Parameter für RL
     """
     rewards = 0
     name = "nameOfGraph"

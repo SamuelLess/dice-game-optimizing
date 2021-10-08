@@ -17,9 +17,9 @@ SIDES = 3
 #hier lässt sich festlegen, welche methode wie oft getestet werden sollen
 playEvoReps = [0, 1, 2, 3]
 #playEvoReps = [3]
-runPerRepEvo = 10
+runPerRepEvo = 1
 
-runsRl = 10
+runsRl = 1
 
 
 #hier lassen sich die Argumente für die Testdurchläufe konfigurieren
@@ -33,6 +33,7 @@ rl_kwargs = {"defaultQValue": 0.3 ,"alpha": 0.5, "endAlpha":0.001, "gamma": 1,
 EVONAMES = {0: "Liste", 1: "Vektor1", 2: "Vektor2", 3: "NN"}
 
 def main():
+    """Führt das Hauptprogramm aus."""
     print(f"({PIPS=}, {SIDES=})")
     reps = []
     for repNum in playEvoReps:

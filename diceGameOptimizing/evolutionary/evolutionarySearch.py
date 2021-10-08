@@ -8,7 +8,35 @@ from tqdm import tqdm
 
 class EvolutionarySearch:
     def __init__(self, game, strategyRep=0, populationSize=100, chooseBest=0.2, 
-            changeRate=1, generations=50, gamesToPlay=70000, fitnessAgainst="all", output=False):
+            changeRate=1, generations=50, gamesToPlay=None, fitnessAgainst="all", output=False):
+        """
+        Implementiert den Evolutionären Algorithmus.
+        Lässt sich durch die `train()` Methode ausführen.
+
+        Parameters
+        ---------
+        game : Game
+            Environment, das optimiert wird.
+        strategyRep : int
+            Art der Strategiedarstellung. 
+            0 -> Liste; 1 -> Vektor; 2 -> Vektor; 3 -> NeuronalesNetz
+        populationSize : int
+            Populationsgröße.
+        chooseBest : float
+            Anteil der Population, auf dem die Mutationen für die nächste Generation basieren.
+        changeRate : float
+            Wert, wie stark die Agenten verändert werden. (Änderungsrate)
+        generations : int
+            Anzahl der Generationen, über die trainiert wird.
+        gamesToPlay : int
+            Anzahl der Spiele, die zum Training gespielt werden dürfen.
+        fitnessAgainst : int | str
+            Spezifiziert die Fitnessbestimmung. (s. Agent)
+        
+        .. note::
+            Wenn `gamesToPlay` nicht `None` ist wird für die Anzahl der Spiele trainiert. 
+            Ansonsten nach Anzahl der Generationen.
+        """
         self.game = game
         if strategyRep == 0:
             self.strategyHandler = StratList(game.pips, game.sides)
@@ -32,6 +60,14 @@ class EvolutionarySearch:
             self.population.append(Agent(game, self.strategyHandler, 0, changeRate))
 
     def nextGeneration(self):
+        """
+        Erstellt die nächste Generation an Agenten.
+
+            - Von allen Agenten die Fitness bestimmen.
+            - Die Agenten anhand ihrer Fitness sortieren.
+            - Die besten `chooseBest` auswählen.
+            - Fortpflanezen und mit leichten Veränderungen in die nächste Generation.
+        """
         #agenten auswerten
         for agent in self.population:
             agent.evaluateFitness(self.fitnessAgainst)
@@ -46,12 +82,25 @@ class EvolutionarySearch:
         self.population.extend(newPopulation)
 
     def train(self):
+        """
+        Führt den Trainingszyklus aus.
+
+        Returns
+        ---------
+        rewardPoints : [(int, float)] Punkte (insgesamt gespielte Spiele, erreichte Auszahlung)
+        """
         rewardPoints = []
-        while self.game.gamesPlayed < self.gamesToPlay:
-            self.population[0].evaluateFitness("all", invisibleGame=True)
-            rewardPoints.append((self.game.gamesPlayed, self.population[0].fitness))
-            print(f"Gespielte Spiele: {self.game.gamesPlayed} max reward: {rewardPoints[-1][1]}", end="\r")
-            self.nextGeneration()
-            if self.game.gamesPlayed > self.gamesToPlay:
-                break
+        if self.gamesToPlay != None:
+            while self.game.gamesPlayed < self.gamesToPlay:
+                self.population[0].evaluateFitness("all", invisibleGame=True)
+                rewardPoints.append((self.game.gamesPlayed, self.population[0].fitness))
+                print(f"Gespielte Spiele: {self.game.gamesPlayed} max reward: {rewardPoints[-1][1]}", end="\r")
+                self.nextGeneration()
+        else:
+            for i in tqdm(range(generations)):
+                self.population[0].evaluateFitness("all", invisibleGame=True)
+                rewardPoints.append((self.game.gamesPlayed, self.population[0].fitness))
+                print(f"Gespielte Spiele: {self.game.gamesPlayed} max reward: {rewardPoints[-1][1]}", end="\r")
+                self.nextGeneration()
+
         return rewardPoints

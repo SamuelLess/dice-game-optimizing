@@ -4,11 +4,14 @@ import statistics as stat
 import random
 from diceGameOptimizing.evolutionary.strategy.strat import StrategyAbstact
 
-'''
-Diese Klasse ist für die Strategiedarstellgung über Listen zuständig.
-'''
 class StratList(StrategyAbstact):
+    """
+    Implementiert die Strategiedarstellung über Listen.
+    """
     def __init__(self, pips, sides):
+        """
+        Initialisiert neuen Strategie Handler.
+        """
         self.STATES = []
         self.pips = pips
         self.sides = sides
@@ -19,13 +22,7 @@ class StratList(StrategyAbstact):
 
     def numOfState(self, state):
         """
-        Für die den Index eines states in der STATES Liste.
-    
-        Zuständig: Paul
-
-        Argumente: self, state (Liste)
-
-        Return: Zahl
+        Hilfsfunktion. Gibt Nummer eines States an.
         """
         for i in range(len(self.STATES)):
             if(self.STATES[i]==state):
@@ -35,13 +32,7 @@ class StratList(StrategyAbstact):
 
     def createStates(self, usedSides, state):
         """
-        Erstellt alle states für die mit pips und sides in STATES Liste.
-
-        Zuständig: Paul
-
-        Argumente: self, 0, 0 (für rekursiven Aufruf)
-
-        Return: nichts
+        Hilfsfunktion. Erstellt alle States.
         """
         if(0==usedSides):
             for i in range(self.pips+1):
@@ -57,13 +48,7 @@ class StratList(StrategyAbstact):
 
     def randStrategyRecursive(self, usedSides, usedPips, strategy, strategy_usedPips, startingPlayer, alreadyUsedPips):
         """
-        Erstellt eine zufällige legale Strategie
-
-        Zuständig: Paul
-
-        Argumente: 
-
-        Return: zufällige Strategie
+        Hilfsfunktion. Erstellt mit rekursivem Prüfen auf Legalität eine zufällige Strategie.
         """
         if(0==usedSides):
             for i in range(self.pips+1):
@@ -83,25 +68,13 @@ class StratList(StrategyAbstact):
 
     def randomStrategy(self):# startingPlayer, alreadyUsedPips):
         """
-        Ruft das Erstellen einer Random Strategie auf und gibt diese zurück.
-
-        Zuständig: Paul
-
-        Argumente: für den Fall das man eine Seite bereits gesetzt, startingPlayer=True, alreadyUsedPips = anzahl an auf die genutzte Seite gemalte Pips 
-
-        Return: zufällige Strategie
+        Ruft das rekursive Erstellen einer Random Strategie auf und gibt diese zurück.
         """
         return self.randStrategyRecursive(0,0,[],0,False, 0)
 
     def changedStrategy(self, strategy, changeRate):
         """
-        Verändert eine gegebene Strategie
-
-        Zuständig: Paul
-
-        Argumente: zu verändernde Strategie
-
-        Return: veränderte Strategie
+        Verändert eine gegebene Strategie und gibt eine neue zurück.
         """
         stratSave = strategy[:]
         numberOfChanges = 0
@@ -135,12 +108,6 @@ class StratList(StrategyAbstact):
     def traceState(self, stateNum, strategy):
         """
         Schauf ob eine Strategie, die an einer bestimmten Stelle bearbeitet wurde legal ist.
-        
-        Zuständig: Samuel
-
-        Argumente: postition der Veränderung, veränderte Strategie
-
-        Return: ob Legale Änderung
         """
         sum = 0
         for i in range(1,self.sides-1):
@@ -151,4 +118,7 @@ class StratList(StrategyAbstact):
 
 
     def nextMove(self, opponentsMoves, strategy):
+        """
+        Gibt den nächsten Zug zurück
+        """
         return strategy[self.numOfState(opponentsMoves)]

@@ -8,9 +8,15 @@ class Game:
     def __init__(self, pips, sides, rewardDraw=0.5):
         """
         Erstellt eine Instanz des Würfelspiels (pips, sides).
-        Durch den Parameter rewardDraw lässt sich die Auszahlung bei einem Unentschieden ändern.
-
-        Return: None
+        
+        Parameters
+        ----------
+        pips : int
+            Anzahl der zu verteilenden Augen
+        sides : int
+            Anzahl der Seiten des Würfels
+        rewardDraw : float
+            Auszahlung für ein Unentschieden
         """
         self.pips = pips
         self.sides = sides
@@ -28,7 +34,16 @@ class Game:
         Startet ein zufälliges Spiel, außer wenn playInOrder True ist.
         In diesem Fall werden alle möglichen Würfel (inkl. Permutationen) nacheinander gespielt.
 
-        Return: Liste mit erstem Spielzug.
+        Parameters
+        ---------
+        playInOrder : bool
+            Legt fest, ob alle Würfel der Reihe nach statt zufällig gespielt werden sollen.
+        invisibleGame : bool
+            Legt fest, ob das gestartete Spiel mitgezählt wird.
+
+        Returns
+        --------
+        Liste mit erstem Spielzug.
         """
         if not invisibleGame:
             self.gamesPlayed += 1
@@ -49,7 +64,9 @@ class Game:
         Gibt an, ob ein angefangenes Spiel beendet wurde.
         Sollte nicht ohne gestartetes Spiel aufgerufen werden.
 
-        Return: bool
+        Returns
+        --------
+        Ob das angefangene Spiel beendet wurde.
         """
         return self.atTurn >= self.sides-1 or self.illegal()
 
@@ -62,10 +79,18 @@ class Game:
     def takeAction(self, action: int, output = False):
         """
         Spielt ein bereits gestartetes Spiel weiter.
-        Gibt den bisher sichtbaren Würfel des Gegeners 
-        und die in diesem Zug erreichte Auszahlung zurück.
         
-        Return: oppDice, reward
+        Parameters
+        ----------
+        action: int
+            Zu verteilende Augenzahl.
+        
+        Returns
+        ----------
+        oppDice : [int]
+            Würfel des Gegners bisher.
+        reward : float
+            Auszahlung für den Zug. Immer 0 außer bei letztem.
         """
         self.atTurn+=1#wie vieltes mal agent spielt
         self.agentDice.append(action)
@@ -85,7 +110,10 @@ class Game:
         Berechnet unter Beachtung des Wertes "rewardDraw" die Auszahlung 
         eines abgeschlossenen legalen Spiels für den Spieler.
 
-        Return: reward: int
+        Returns
+        ---------
+        reward: int
+            Gesamtauszahlung.
         """
         wp1 = 0
         for p1 in self.agentDice:
@@ -100,6 +128,7 @@ class Game:
 
     def generateDice(self, usedSides, dice):
         """
+        Hilfsfunktion.
         Generiert alle möglichen Würfel inklusive Permutationen in DICE.
         """ 
         if(usedSides == 0):

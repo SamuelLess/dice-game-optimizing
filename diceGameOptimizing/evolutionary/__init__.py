@@ -1,0 +1,1 @@
+"""Implementiert die Evolutionären Algorithmen als Optimierungsalgorithmen."""
