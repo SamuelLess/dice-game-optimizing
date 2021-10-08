@@ -1,7 +1,14 @@
 import matplotlib.pyplot as plt
 
 def generatePlot(testRuns: (str, [(int, float)])):
-	#print(testRuns)
+	"""
+	Generiert aus den Reward-Punkten vno verschiedenen Durchläufen der Algorithmen ein Diagramm.
+	Sortiert verschiedene Durchläufe nach Name zusammen. Gibt Minimal-, Maximal-, Durchschnittswert an.
+
+	Parameters
+	---------
+	testRuns: (str, [(int, float)])
+	"""
 
 	names = {run[0] for run in testRuns}
 

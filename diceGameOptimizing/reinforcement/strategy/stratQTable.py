@@ -9,7 +9,26 @@ def argNmax(a, N, axis=None):
 class StratQTable:
 	def __init__(self, game, defaultQValue, alpha, alphaDecay, gamma, epsilon, epsilonDecay):
 		"""
-		Implementiert eine Q-Table auf basis eines `dict`.
+		Implementiert eine Q-Table auf Basis eines `dict`.
+		
+		Parameters
+		---------
+		game : Game
+			Environment, das optimiert wird.
+		defaultQValue : float
+			Standardwert im Q-Table.
+		strategyRep : int
+			Art der Darstellung des Q-Table.
+		alpha : float
+			Konstanter Wert α für Q-Learning.
+		alphaDecay: float
+			Faktor, mit dem α nach jedem Spiel verringert wird.
+		gamma : float
+			Konstanter Wert γ für Q-Learning.
+		epsilon : float
+			Startwert des ε.
+		epsilonDecay : float
+			Faktor, mit dem ε nach jedem Spiel verringert wird.
 
 		"""
 		self.game = game
@@ -20,13 +39,25 @@ class StratQTable:
 		self.epsilonDecay = epsilonDecay
 		self.movesGiven = [0] * (self.game.pips+1)
 		self.defaultQValue = defaultQValue
-		#qtable wird während des spielens generiert
-		self.qtable = {}#{state: (np.full(self.game.pips+1, defaultQValue)) for state in self.STATES}
+		#qtable wird während des spielens generiert (lazy approach)
+		self.qtable = {}
 		#self.generateQTable(defaultQValue)
-		#print(self.qtable)
 
 	def reinforce(self, state, nextState, action, reward):
+		"""
+		Update der Q-Funktion.
 
+		Parameters
+		---------
+		state : ((int,...),(int,...))
+			Zustand.
+		nextState : ((int,...),(int,...))
+			Nächster Zustand.
+		action : int
+			Gewählte Aktion.
+		reward : float
+			Erlangte Belohnung.
+		"""	
 		if state not in self.qtable:
 			self.qtable[state] = np.full(self.game.pips+1, self.defaultQValue)
 		if nextState not in self.qtable and len(nextState[0]) < self.game.sides:
@@ -41,11 +72,18 @@ class StratQTable:
 			- self.qtable[state][action]))
 	
 	def nextMove(self, state):
+		"""
+		Wählt nach ε-greedy Strategie den nächsten Zug aus. 
+		Erweiterung: Die Aktion mit dem n. größten Wert wird zur Wahrscheinlichkeit (1-ε)^n ausgewählt.
+		"""
 		if state not in self.qtable:
 			self.qtable[state] = np.full(self.game.pips+1, self.defaultQValue)
 		return self.nthBestMove(state, 1)
 
 	def nthBestMove(self, state, nth):
+		"""
+		Rekursive Funktion, um mit Wahrscheinlichkeit ε nicht den `nth` Zug zu wählen.
+		"""
 		self.movesGiven[nth] += 1
 		if nth == self.game.pips:
 			return argNmax(self.qtable[state], nth)
@@ -53,11 +91,17 @@ class StratQTable:
 		else self.nthBestMove(state, nth+1))
 
 	def bestMove(self, state):
+		"""
+		Gibt den besten Zug zurück. (ohne ε-greedy)
+		"""
 		if state not in self.qtable:
 			self.qtable[state] = np.full(self.game.pips+1, self.defaultQValue)
 		return np.argmax(self.qtable[state])
 
 	def printqtable(self):
+		"""
+		Hilfsfunktion. Ausgabe des Q-Table.
+		"""
 		out = "PRINTING QTABLE\n"
 		for key in self.qtable:
 			out += "state: " + str(key) + "\n"
@@ -68,7 +112,8 @@ class StratQTable:
 
 	def generateQTable(self, defaultQValue):
 		"""
-		unused
+		Hilfsfunktion. Generiert alle keys für den Q-Table. 
+		Nicht nötig mit "lazy" Ansatz zur Erstellung.
 		"""
 		agentDice = [[]]
 		for _ in range(self.game.sides-1):
