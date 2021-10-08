@@ -20,10 +20,20 @@ def generatePlot(testRuns: (str, [(int, float)])):
 		x, ymean = zip(*meanRewardPoints)
 		plt.plot(x, ymean, label=name, linewidth=1)
 		plt.fill_between(x, combinedRuns[name]["min"], 
-							combinedRuns[name]["max"], alpha=0.5)
+							combinedRuns[name]["max"], alpha=0.3)
 		print(f"{name}: {str(rewards[-1])} rewardPoints: {len(rewards)} * {len(nameAssignedRewards[name])}")
+		
+		maximalVal = combinedRuns[name]["generalMax"]
+		minimalVal = combinedRuns[name]["generalMin"]
+		standardDiv = combinedRuns[name]["max"][-1]-combinedRuns[name]["mean"][-1][-1]
+		print(f"\tMaximalwert: {maximalVal}\n \tMinimalwert: {minimalVal}")
+		print(f"\tMinimalwert ist {float(minimalVal/maximalVal)*100.0:.2f}% vom Maximalwert")
+		print(f"\tStandardabweichung beim letzten Wert letzter Wert: {standardDiv}")
+		print()
+			#-combinedRuns[name]["mean"][-1]}")
 	
-	plt.legend()
+	plt.legend(loc="lower right")
+	#plt.gca().set_aspect(aspect=300000)
 	plt.show()
 
 def evalSameNameTestRuns(testRunRewardPoints: [(str, float)]):
@@ -31,6 +41,8 @@ def evalSameNameTestRuns(testRunRewardPoints: [(str, float)]):
 	rewardPoints["mean"] = meanlists(testRunRewardPoints)
 	rewardPoints["min"] = varlists(testRunRewardPoints, False)
 	rewardPoints["max"] = varlists(testRunRewardPoints, True)
+	rewardPoints["generalMax"] = maxlists(testRunRewardPoints)[-1]
+	rewardPoints["generalMin"] = minlists(testRunRewardPoints)[-1]
 	return rewardPoints
 
 def varlists(lists, add):
