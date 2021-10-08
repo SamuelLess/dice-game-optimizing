@@ -31,7 +31,7 @@ class StratList(StrategyAbstact):
             if(self.STATES[i]==state):
                return i
         #Kommt vor, wird aber nicht für Zugriff auf self.STATES verwendet.
-        return "Should not be used."
+        return -1#"Should not be used."
 
     def createStates(self, usedSides, state):
         """
