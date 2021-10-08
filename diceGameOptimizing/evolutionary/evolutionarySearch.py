@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 class EvolutionarySearch:
     def __init__(self, game, strategyRep=0, populationSize=100, chooseBest=0.2, 
-            changeRate=1, generations=50, fitnessAgainst="all", output=False):
+            changeRate=1, generations=50, gamesToPlay=70000, fitnessAgainst="all", output=False):
         self.game = game
         if strategyRep == 0:
             self.strategyHandler = StratList(game.pips, game.sides)
@@ -24,6 +24,7 @@ class EvolutionarySearch:
         self.chooseBest = chooseBest
         self.changeRate = changeRate
         self.generations = generations
+        self.gamesToPlay = gamesToPlay
         self.fitnessAgainst = fitnessAgainst
         self.output = output
         self.population = []
@@ -31,6 +32,7 @@ class EvolutionarySearch:
             self.population.append(Agent(game, self.strategyHandler, 0, changeRate))
 
     def nextGeneration(self):
+        #agenten auswerten
         for agent in self.population:
             agent.evaluateFitness(self.fitnessAgainst)
         #sort
@@ -40,14 +42,16 @@ class EvolutionarySearch:
         newPopulation = []
         for best in self.population:
             for i in range(int((1-self.chooseBest)/self.chooseBest)):
-                #print(self.population)
                 newPopulation.append(best.changedAgent())
         self.population.extend(newPopulation)
 
     def train(self):
         rewardPoints = []
-        for i in tqdm(range(self.generations)):
+        while self.game.gamesPlayed < self.gamesToPlay:
             self.population[0].evaluateFitness("all", invisibleGame=True)
             rewardPoints.append((self.game.gamesPlayed, self.population[0].fitness))
+            print(f"Gespielte Spiele: {self.game.gamesPlayed} max reward: {rewardPoints[-1][1]}", end="\r")
             self.nextGeneration()
+            if self.game.gamesPlayed > self.gamesToPlay:
+                break
         return rewardPoints
