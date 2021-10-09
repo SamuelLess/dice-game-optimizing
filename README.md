@@ -1,24 +1,23 @@
 # Vergleich von Strategieoptimierungsalgorithmen für ein Würfelspiel
 
 ## Zielstellung
-Das Ziel ist es, verschiedene Optimierungsalgorithmen zu vergleichen. Dabei implementiert dieses Programm vier verschiede evolutionäre Ansätze sowie einen Q-Learing. 
+Das Ziel ist es, verschiedene Optimierungsalgorithmen zu vergleichen. Dieses Programm implementiert vier verschiede evolutionäre Ansätze sowie einen auf Basis von Q-Learing. 
 Verschiedene Durchläufe werden in Diagrammen dargestellt.
 
-![Beispiel Diagramm](docs/exampleDiagram.png)
+Beispieldiagramm:
 
-## Programm-Struktur
-```
-main.py
+<img src="docs/exampleDiagram.png" width="400" align="center">
 
-diceGameOptimizing/diceGame.py -> einheitliches Environment für das alle Algorithmen optimieren
-diceGameOptimizing/diceGameOptimizer -> Handler für alles, je nach kwargs des Aufrufs
-diceGameOptimizing/output.py -> einheitliche Ausgabe in Form von Diagrammen
+## Dokumentation
 
-diceGameOptimizing/evolutionary/evolutionarySearch.py
-diceGameOptimizing/evolutionary/agent.py
-diceGameOptimizing/evolutionary/strat/...
+Eine vollständig Dokumentation des Quellcodes ist [hier](docs/DOCUMENTATION.md) zu finden.
 
-diceGameOptimizing/reinforcement/reinforcementLearning.py
-diceGameOptimizing/reinforcement/agent.py
-diceGameOptimizing/reinforcement/strat/...
-```
+## Installation
+Das Programm lässt sich mit Python ausführen.
+Benötigt werden:
+  - Python >=3.8
+  - [numpy](https://numpy.org/)
+  - [tqdm](https://github.com/tqdm/tqdm)
+
+## Fragen und Mithilfe
+Das Projekt ist abgeschlossen. Bei Fragen oder ähnlichem bitte an [Samuel](mailto:samuel@LMpost.de) wenden.
