@@ -47,9 +47,9 @@ class StratVecDoubleLayer(StrategyAbstact):
 		return 1/(1+np.exp(-x))
 
 	def nextMove(self, opponentsMoves, strategy):
-        """
-        Gibt den nächsten Zug zurück
-        """
+		"""
+		Gibt den nächsten Zug zurück
+		"""
 		opp_moves_mat= []
 		for i in range(self.sides-1):
 			if(len(opponentsMoves)>i):

@@ -3,7 +3,7 @@ import random as rand
 class Game:
     """
     Diese Klasse implementiert das Würfelspiel, für welches Strategien optimiert werden sollen.
-    Jede Interaktion mit dem Würfelspiel läuft über eine Intstanz dieser Klasse.
+    Jede Interaktion mit dem Würfelspiel läuft über eine Instanz dieser Klasse.
     """
     def __init__(self, pips, sides, rewardDraw=0.5):
         """
