@@ -1,7 +1,10 @@
-# Vergleich von Strategieoptimierungsalgorithmen für ein Würfelspiel 🧊
+# Vergleich von Strategieoptimierungsalgorithmen für ein Würfelspiel
 
 ## Zielstellung
-Das Ziel ist es, verschiedene Optimierungsalgorithmen zu vergleichen und schöne Diagramme zu erstellen. :octocat:
+Das Ziel ist es, verschiedene Optimierungsalgorithmen zu vergleichen. Dabei implementiert dieses Programm vier verschiede evolutionäre Ansätze sowie einen Q-Learing. 
+Verschiedene Durchläufe werden in Diagrammen dargestellt.
+
+![Beispiel Diagramm](docs/exampleDiagram.png)
 
 ## Programm-Struktur
 ```
