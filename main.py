@@ -34,15 +34,17 @@ EVONAMES = {0: "Liste", 1: "Vektor1", 2: "Vektor2", 3: "NN"}
 
 def main():
     """Führt das Hauptprogramm aus."""
-    print(f"({PIPS=}, {SIDES=})")
+    print(f"Das gewählte Spiel ist ({PIPS}, {SIDES}).")
+    if len(playEvoReps) > 0 and runPerRepEvo > 0:
+        print(f"Trainiert werden {runPerRepEvo} mal die evolutionären Algorithmen mit den Repräsentationen {playEvoReps}.")
+    if runsRl > 0: 
+        print(f"Trainiert wird {runsRl} mal das Reinforcement Learning.")
     reps = []
     for repNum in playEvoReps:
         evo_kwargs["strategyRep"] = repNum
         random.seed(repNum)
         numpy.random.seed(repNum)
         for i in range(runPerRepEvo):
-            print(i,"von",runPerRepEvo)
-            print()
             reps.append(optimizeDiceGame(PIPS, SIDES, "EVO", newname=f"Evo_{EVONAMES[repNum]}", evo_kwargs=evo_kwargs))
 
     for i in range(runsRl):
