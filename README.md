@@ -18,6 +18,7 @@ Benötigt werden:
   - Python >=3.8
   - [numpy](https://numpy.org/)
   - [tqdm](https://github.com/tqdm/tqdm)
+  - [matplotlib](https://matplotlib.org/)
 
 ## Fragen und Mithilfe
 Das Projekt ist abgeschlossen. Bei Fragen oder ähnlichem bitte an [Samuel](mailto:samuel@LMpost.de) wenden.
