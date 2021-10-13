@@ -1,7 +1,7 @@
 # Vergleich von Strategieoptimierungsalgorithmen für ein Würfelspiel
 
 ## Zielstellung
-Das Ziel ist es, verschiedene Optimierungsalgorithmen zu vergleichen. Dieses Programm implementiert vier verschiede evolutionäre Ansätze sowie einen auf Basis von Q-Learing. 
+Das Ziel ist es, verschiedene Optimierungsalgorithmen zu vergleichen. Dieses Programm implementiert vier verschiede evolutionäre Algorithmen sowie einen Algorithmus auf Basis von Q-Learing. 
 Verschiedene Durchläufe werden in Diagrammen dargestellt.
 
 Beispieldiagramm:
@@ -10,7 +10,7 @@ Beispieldiagramm:
 
 ## Dokumentation
 
-Eine vollständig Dokumentation des Quellcodes ist [hier](docs/DOCUMENTATION.md) zu finden.
+Eine vollständige Dokumentation des Quellcodes ist [hier](docs/DOCUMENTATION.md) zu finden.
 
 ## Installation
 Das Programm lässt sich mit Python ausführen.
